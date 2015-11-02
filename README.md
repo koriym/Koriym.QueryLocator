@@ -12,13 +12,6 @@
  
 ### Usage
 
-SQL files
-```
-└── Sql
-    └── User
-        └── select_user.sql
-```
-
 ```php
 
 use Koriym\QueryLocator\QueryLocator;
@@ -26,6 +19,13 @@ use Koriym\QueryLocator\QueryLocator;
 $query = new QueryLocator($sqlDir);
 $query['user/select_user'];                // SELECT * FROM usr;
 $query->getCountQuery('user/select_user'); // SELECT COUNT(*) FROM usr;
+```
+
+SQL files
+```
+└── Sql
+    └── User
+        └── select_user.sql
 ```
 
 ## Requirements
