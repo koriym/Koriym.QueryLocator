@@ -12,7 +12,7 @@ class ApcQueryLocatorTest extends QueryLocatorTest
     protected function setUp()
     {
         parent::setUp();
-        $sqlDir = __DIR__ . '/Fake/Sql';
+        $sqlDir = __DIR__ . '/sql';
         $this->query = new ApcQueryLocator($sqlDir, 'foo-namespace');
     }
 }

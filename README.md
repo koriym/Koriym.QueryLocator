@@ -13,19 +13,18 @@
 ### Usage
 
 ```php
-
 use Koriym\QueryLocator\QueryLocator;
 
 $query = new QueryLocator($sqlDir);
-$sql = $query['user/select_user'];                // SELECT * FROM usr;
-$sql = $query->getCountQuery('user/select_user'); // SELECT COUNT(*) FROM usr;
+$sql = $query['admin/user'];                // SELECT * FROM usr;
+$sql = $query->getCountQuery('admin/user'); // SELECT COUNT(*) FROM usr;
 ```
 
 SQL files
 ```
-└── Sql
-    └── User
-        └── select_user.sql
+└── sql
+    └── admin
+        └── user.sql
 ```
 
 ## Requirements

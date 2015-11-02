@@ -34,7 +34,7 @@ final class QueryLocator implements QueryLocatorInterface, \ArrayAccess
         $sqlFile = sprintf(
             '%s/%s/%s.sql',
             $this->sqlDir,
-            ucwords($path['dirname']),
+            $path['dirname'],
             $path['basename']
         );
         if (! file_exists($sqlFile)) {
