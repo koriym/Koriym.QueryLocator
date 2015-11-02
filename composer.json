@@ -1,0 +1,13 @@
+{
+    "name": "koriym/query-locator",
+    "description":"A SQL query locator",
+    "keywords":[
+        "SQL"
+    ],
+    "license": "MIT",
+    "autoload":{
+        "psr-4":{
+            "Koriym\\QueryLocator\\": "src/"
+        }
+    }
+}
