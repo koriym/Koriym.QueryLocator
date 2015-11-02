@@ -24,8 +24,8 @@ SQL files
 use Koriym\QueryLocator\QueryLocator;
 
 $query = new QueryLocator($sqlDir);
-$query['user/select_user'];                // SELECT * FROM usr;
-$query->getCountQuery('user/select_user'); // SELECT COUNT(*) FROM usr;
+$query['admin/user'];                // SELECT * FROM usr;
+$query->getCountQuery('admin/user'); // SELECT COUNT(*) FROM usr;
 ```
 
 ## Requirements

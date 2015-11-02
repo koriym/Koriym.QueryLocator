@@ -16,28 +16,28 @@ class QueryLocatorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $sqlDir = __DIR__ . '/Fake/Sql';
+        $sqlDir = __DIR__ . '/sql';
         $this->query = new QueryLocator($sqlDir);
     }
 
     public function testGetSql()
     {
-        $sql = $this->query->get('user/select_user');
+        $sql = $this->query->get('admin/user');
         $expected = 'SELECT * FROM usr;';
         $this->assertSame($expected, $sql);
     }
 
     public function testGetSqlCached()
     {
-        $sql = $this->query->get('user/select_user');
-        $sql = $this->query->get('user/select_user');
+        $sql = $this->query->get('admin/user');
+        $sql = $this->query->get('admin/user');
         $expected = 'SELECT * FROM usr;';
         $this->assertSame($expected, $sql);
     }
 
     public function testArrayAccess()
     {
-        $sql = $this->query['user/select_user'];
+        $sql = $this->query['admin/user'];
         $expected = 'SELECT * FROM usr;';
         $this->assertSame($expected, $sql);
     }
@@ -50,15 +50,15 @@ class QueryLocatorTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCountSql()
     {
-        $sql = $this->query->getCountQuery('user/select_user');
+        $sql = $this->query->getCountQuery('admin/user');
         $expected = 'SELECT COUNT(*) FROM usr;';
         $this->assertSame($expected, $sql);
     }
 
     public function testGetCountSqlCached()
     {
-        $sql = $this->query->getCountQuery('user/select_user');
-        $sql = $this->query->getCountQuery('user/select_user');
+        $sql = $this->query->getCountQuery('admin/user');
+        $sql = $this->query->getCountQuery('admin/user');
         $expected = 'SELECT COUNT(*) FROM usr;';
         $this->assertSame($expected, $sql);
     }
@@ -66,24 +66,24 @@ class QueryLocatorTest extends \PHPUnit_Framework_TestCase
     public function testGetCountSqlFailed()
     {
         $this->setExpectedException(CountQueryException::class);
-        $this->query->getCountQuery('user/distinct');
+        $this->query->getCountQuery('admin/distinct');
     }
 
     public function testOffsetExists()
     {
-        $isSet = isset($this->query['user/select_user']);
+        $isSet = isset($this->query['admin/user']);
         $this->assertTrue($isSet);
     }
 
     public function testOffsetUnset()
     {
         $this->setExpectedException(ReadOnlyException::class);
-        unset($this->query['user/select_user']);
+        unset($this->query['admin/user']);
     }
 
     public function testSet()
     {
         $this->setExpectedException(ReadOnlyException::class);
-        $this->query['user/select_user'] = 'A SQL';
+        $this->query['admin/user'] = 'A SQL';
     }
 }
