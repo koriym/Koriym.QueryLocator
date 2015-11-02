@@ -9,5 +9,10 @@
         "psr-4":{
             "Koriym\\QueryLocator\\": "src/"
         }
+    },
+    "autoload-dev":{
+        "psr-4":{
+            "Koriym\\QueryLocator\\": ["tests/"]
+        }
     }
 }
