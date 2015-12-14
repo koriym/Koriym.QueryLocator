@@ -30,12 +30,10 @@ final class QueryLocator implements QueryLocatorInterface, \ArrayAccess
      */
     public function get($queryName)
     {
-        $path = pathinfo($queryName);
         $sqlFile = sprintf(
-            '%s/%s/%s.sql',
+            '%s/%s.sql',
             $this->sqlDir,
-            $path['dirname'],
-            $path['basename']
+            $queryName
         );
         if (! file_exists($sqlFile)) {
             throw new QueryFileNotFoundException($queryName);
