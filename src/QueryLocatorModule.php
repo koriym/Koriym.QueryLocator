@@ -10,11 +10,19 @@ use Ray\Di\AbstractModule;
 
 class QueryLocatorModule extends AbstractModule
 {
+    /**
+     * @var string
+     */
     private $sqlDir;
 
-    public function __construct($sqlDir)
+    /**
+     * @param string              $sqlDir
+     * @param AbstractModule|null $module
+     */
+    public function __construct($sqlDir, AbstractModule $module = null)
     {
         $this->sqlDir = $sqlDir;
+        parent::__construct($module);
     }
 
     /**
