@@ -10,7 +10,7 @@ use Koriym\QueryLocator\Exception\CountQueryException;
 use Koriym\QueryLocator\Exception\QueryFileNotFoundException;
 use Koriym\QueryLocator\Exception\ReadOnlyException;
 
-final class QueryLocator implements QueryLocatorInterface, \ArrayAccess
+final class QueryLocator implements QueryLocatorInterface
 {
     /**
      * @var string
