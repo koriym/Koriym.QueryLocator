@@ -6,7 +6,7 @@
  */
 namespace Koriym\QueryLocator;
 
-interface QueryLocatorInterface
+interface QueryLocatorInterface extends \ArrayAccess
 {
     /**
      * @param string $queryName

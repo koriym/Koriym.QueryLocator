@@ -8,7 +8,7 @@ namespace Koriym\QueryLocator;
 
 use Koriym\QueryLocator\Exception\ReadOnlyException;
 
-final class ApcQueryLocator implements QueryLocatorInterface, \ArrayAccess
+final class ApcQueryLocator implements QueryLocatorInterface
 {
     /**
      * @var QueryLocator
