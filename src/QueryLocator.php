@@ -54,6 +54,38 @@ final class QueryLocator implements QueryLocatorInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function offsetExists($offset)
+    {
+        return (bool) $this->get($offset);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetGet($offset)
+    {
+        return $this->get($offset);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetSet($offset, $value)
+    {
+        throw new ReadOnlyException('not supported');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetUnset($offset)
+    {
+        throw new ReadOnlyException('not supported');
+    }
+
+    /**
      * Return count query
      *
      * @param string $sql
@@ -83,41 +115,9 @@ final class QueryLocator implements QueryLocatorInterface
             throw new CountQueryException($sql);
         }
         $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $sql, 1);
-        list($queryCount, ) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
-        list($queryCount, ) = preg_split('/\bLIMIT\b/is', $queryCount);
+        list($queryCount) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
+        list($queryCount) = preg_split('/\bLIMIT\b/is', $queryCount);
 
         return trim($queryCount);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function offsetExists($offset)
-    {
-        return (bool) $this->get($offset);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function offsetGet($offset)
-    {
-        return $this->get($offset);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function offsetSet($offset, $value)
-    {
-        throw new ReadOnlyException('not supported');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function offsetUnset($offset)
-    {
-        throw new ReadOnlyException('not supported');
     }
 }
