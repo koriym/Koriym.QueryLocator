@@ -6,7 +6,8 @@
     ],
     "license": "MIT",
     "require-dev": {
-        "ray/di": "~2.0"
+        "ray/di": "~2.0",
+        "phpunit/phpunit": "^5.7"
     },
     "autoload":{
         "psr-4":{
