@@ -62,7 +62,7 @@ final class ApcQueryLocator implements QueryLocatorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function offsetExists($offset)
     {
@@ -70,7 +70,7 @@ final class ApcQueryLocator implements QueryLocatorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function offsetGet($offset)
     {
@@ -78,7 +78,7 @@ final class ApcQueryLocator implements QueryLocatorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -86,7 +86,7 @@ final class ApcQueryLocator implements QueryLocatorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function offsetUnset($offset)
     {
