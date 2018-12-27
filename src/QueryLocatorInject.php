@@ -1,9 +1,7 @@
 <?php
-/**
- * This file is part of the Koriym.QueryLocator
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Koriym\QueryLocator;
 
 trait QueryLocatorInject
@@ -14,8 +12,6 @@ trait QueryLocatorInject
     protected $query;
 
     /**
-     * @param QueryLocatorInterface $query
-     *
      * @Ray\Di\Di\Inject
      */
     public function setQueryLocator(QueryLocatorInterface $query)

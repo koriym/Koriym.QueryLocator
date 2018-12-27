@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Koriym\QueryLocator;
 
 class ApcQueryLocatorTest extends QueryLocatorTest

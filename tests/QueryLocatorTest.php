@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Koriym\QueryLocator;
 
 use Koriym\QueryLocator\Exception\CountQueryException;
 use Koriym\QueryLocator\Exception\QueryFileNotFoundException;
 use Koriym\QueryLocator\Exception\ReadOnlyException;
 
-class QueryLocatorTest extends \PHPUnit_Framework_TestCase
+class QueryLocatorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var QueryLocator
@@ -44,7 +46,7 @@ class QueryLocatorTest extends \PHPUnit_Framework_TestCase
 
     public function testNotFound()
     {
-        $this->setExpectedException(QueryFileNotFoundException::class);
+        $this->expectException(QueryFileNotFoundException::class);
         $this->query['user/not_exist_sql'];
     }
 
@@ -65,7 +67,7 @@ class QueryLocatorTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCountSqlFailed()
     {
-        $this->setExpectedException(CountQueryException::class);
+        $this->expectException(CountQueryException::class);
         $this->query->getCountQuery('admin/distinct');
     }
 
@@ -77,13 +79,13 @@ class QueryLocatorTest extends \PHPUnit_Framework_TestCase
 
     public function testOffsetUnset()
     {
-        $this->setExpectedException(ReadOnlyException::class);
+        $this->expectException(ReadOnlyException::class);
         unset($this->query['admin/user']);
     }
 
     public function testSet()
     {
-        $this->setExpectedException(ReadOnlyException::class);
+        $this->expectException(ReadOnlyException::class);
         $this->query['admin/user'] = 'A SQL';
     }
 }

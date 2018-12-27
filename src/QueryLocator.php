@@ -1,9 +1,7 @@
 <?php
-/**
- * This file is part of the Koriym.QueryLocator
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Koriym\QueryLocator;
 
 use Koriym\QueryLocator\Exception\CountQueryException;
@@ -38,9 +36,8 @@ final class QueryLocator implements QueryLocatorInterface
         if (! file_exists($sqlFile)) {
             throw new QueryFileNotFoundException($queryName);
         }
-        $sql = trim(file_get_contents($sqlFile));
 
-        return $sql;
+        return trim(file_get_contents($sqlFile));
     }
 
     /**
@@ -48,9 +45,7 @@ final class QueryLocator implements QueryLocatorInterface
      */
     public function getCountQuery($queryName)
     {
-        $countSql = $this->rewriteCountQuery($this->get($queryName));
-
-        return $countSql;
+        return $this->rewriteCountQuery($this->get($queryName));
     }
 
     /**
