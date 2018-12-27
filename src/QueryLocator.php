@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Koriym\QueryLocator;
 
-use function is_string;
 use Koriym\QueryLocator\Exception\CountQueryException;
 use Koriym\QueryLocator\Exception\QueryFileNotFoundException;
 use Koriym\QueryLocator\Exception\ReadOnlyException;
-use RuntimeException;
+use function is_string;
 
 final class QueryLocator implements QueryLocatorInterface
 {
@@ -128,6 +127,5 @@ final class QueryLocator implements QueryLocatorInterface
         }
 
         return $contents;
-
     }
 }
