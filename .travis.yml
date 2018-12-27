@@ -20,8 +20,8 @@ before_install:
   - composer self-update
 
 install:
-  - composer update
   - pecl install apcu
+  - composer update
 
 script:
   - ./vendor/bin/phpunit;
