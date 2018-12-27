@@ -21,6 +21,7 @@ before_install:
 
 install:
   - composer update
+  - pecl install apcu
 
 script:
   - ./vendor/bin/phpunit;
