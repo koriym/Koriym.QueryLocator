@@ -1,0 +1,5 @@
+parameters:
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Function apcu_fetch not found#'
+        - '#Function apcu_store not found#'
