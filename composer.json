@@ -6,6 +6,7 @@
     ],
     "license": "MIT",
     "require-dev": {
+        "ext-apcu": "*",
         "ray/di": "^2.5",
         "phpunit/phpunit": "^5.7",
         "phpstan/phpstan-shim": "^0.10"
