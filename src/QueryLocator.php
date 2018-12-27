@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Koriym\QueryLocator;
 
+use function is_string;
 use Koriym\QueryLocator\Exception\CountQueryException;
 use Koriym\QueryLocator\Exception\QueryFileNotFoundException;
 use Koriym\QueryLocator\Exception\ReadOnlyException;
+use RuntimeException;
 
 final class QueryLocator implements QueryLocatorInterface
 {
@@ -100,8 +102,17 @@ final class QueryLocator implements QueryLocatorInterface
             throw new CountQueryException($sql);
         }
         $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $sql, 1);
+        if (! is_string($queryCount)) {
+            throw new RuntimeException($sql);
+        }
         list($queryCount) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
+        if (! is_string($queryCount)) {
+            throw new RuntimeException($queryCount);
+        }
         list($queryCount) = preg_split('/\bLIMIT\b/is', $queryCount);
+        if (! is_string($queryCount)) {
+            throw new RuntimeException($queryCount);
+        }
 
         return trim($queryCount);
     }
