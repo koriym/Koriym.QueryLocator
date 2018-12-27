@@ -103,15 +103,15 @@ final class QueryLocator implements QueryLocatorInterface
         }
         $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $sql, 1);
         if (! is_string($queryCount)) {
-            throw new RuntimeException($sql);
+            throw new CountQueryException($sql);
         }
         list($queryCount) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
         if (! is_string($queryCount)) {
-            throw new RuntimeException($queryCount);
+            throw new CountQueryException($sql);
         }
         list($queryCount) = preg_split('/\bLIMIT\b/is', $queryCount);
         if (! is_string($queryCount)) {
-            throw new RuntimeException($queryCount);
+            throw new CountQueryException($sql);
         }
 
         return trim($queryCount);
