@@ -10,7 +10,7 @@ class QueryLocatorModuleTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetSql()
     {
-        /** @var $queryLocator QueryLocator */
+        /* @var QueryLocator $queryLocator  */
         $queryLocator = (new Injector(new QueryLocatorModule(__DIR__ . '/sql')))->getInstance(QueryLocatorInterface::class);
         $this->assertInstanceOf(QueryLocatorInterface::class, $queryLocator);
         $sql = $queryLocator->get('admin/user');
