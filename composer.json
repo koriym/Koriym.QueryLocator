@@ -7,7 +7,8 @@
     "license": "MIT",
     "require-dev": {
         "ray/di": "^2.5",
-        "phpunit/phpunit": "^5.7"
+        "phpunit/phpunit": "^5.7",
+        "phpstan/phpstan-shim": "^0.10"
     },
     "autoload":{
         "psr-4":{
@@ -16,7 +17,8 @@
     },
     "autoload-dev":{
         "psr-4":{
-            "Koriym\\QueryLocator\\": ["tests/"]
+            "Koriym\\QueryLocator\\": ["tests/"],
+            "MyVendor\\MyPacakge\\": [ "tests/Fake/"]
         }
     }
 }
