@@ -13,10 +13,7 @@ class QueryLocatorModule extends AbstractModule
      */
     private $sqlDir;
 
-    /**
-     * @param string $sqlDir
-     */
-    public function __construct($sqlDir, AbstractModule $module = null)
+    public function __construct(string $sqlDir, AbstractModule $module = null)
     {
         $this->sqlDir = $sqlDir;
         parent::__construct($module);
