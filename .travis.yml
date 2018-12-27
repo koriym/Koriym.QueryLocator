@@ -20,7 +20,7 @@ before_install:
   - composer self-update
 
 install:
-  - pecl install apcu
+  - yes '' | pecl install -f pecl install apcu
   - composer update
 
 script:
