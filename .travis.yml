@@ -31,7 +31,9 @@ jobs:
   - stage: Test
     name: Lowest dependencies
     php: 7.2
-    install: composer update --prefer-dist --prefer-lowest
+    install:
+      - yes '' | pecl install -f pecl install apcu
+      - composer update --prefer-dist --prefer-lowest
 
   - stage: Test
     name: Code coverage

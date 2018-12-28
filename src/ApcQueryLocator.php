@@ -37,11 +37,11 @@ final class ApcQueryLocator implements QueryLocatorInterface
     /**
      * {@inheritdoc}
      */
-    public function get($queryName)
+    public function get(string $queryName) : string
     {
         $sqlId = $this->nameSpace . $queryName;
         $sql = apcu_fetch($sqlId);
-        if ($sql !== false) {
+        if (\is_string($sql)) {
             return $sql;
         }
         $sql = $this->query->get($queryName);
@@ -53,11 +53,11 @@ final class ApcQueryLocator implements QueryLocatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getCountQuery($queryName)
+    public function getCountQuery(string $queryName) : string
     {
         $sqlId = $this->nameSpace . $queryName;
         $sql = apcu_fetch($sqlId);
-        if ($sql !== false) {
+        if (\is_string($sql)) {
             return $sql;
         }
         $sql = $this->query->getCountQuery($queryName);
