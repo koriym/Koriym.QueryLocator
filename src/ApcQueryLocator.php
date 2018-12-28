@@ -41,7 +41,7 @@ final class ApcQueryLocator implements QueryLocatorInterface
     {
         $sqlId = $this->nameSpace . $queryName;
         $sql = apcu_fetch($sqlId);
-        if ($sql !== false) {
+        if (\is_string($sql)) {
             return $sql;
         }
         $sql = $this->query->get($queryName);
