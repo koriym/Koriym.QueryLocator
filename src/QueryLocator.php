@@ -1,14 +1,13 @@
 <?php
-/**
- * This file is part of the Koriym.QueryLocator
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Koriym\QueryLocator;
 
 use Koriym\QueryLocator\Exception\CountQueryException;
 use Koriym\QueryLocator\Exception\QueryFileNotFoundException;
 use Koriym\QueryLocator\Exception\ReadOnlyException;
+use function is_string;
 
 final class QueryLocator implements QueryLocatorInterface
 {
@@ -17,10 +16,7 @@ final class QueryLocator implements QueryLocatorInterface
      */
     private $sqlDir;
 
-    /**
-     * @param string $sqlDir
-     */
-    public function __construct($sqlDir)
+    public function __construct(string $sqlDir)
     {
         $this->sqlDir = $sqlDir;
     }
@@ -35,12 +31,8 @@ final class QueryLocator implements QueryLocatorInterface
             $this->sqlDir,
             $queryName
         );
-        if (! file_exists($sqlFile)) {
-            throw new QueryFileNotFoundException($queryName);
-        }
-        $sql = trim(file_get_contents($sqlFile));
 
-        return $sql;
+        return trim($this->getFileContents($sqlFile));
     }
 
     /**
@@ -48,9 +40,7 @@ final class QueryLocator implements QueryLocatorInterface
      */
     public function getCountQuery($queryName)
     {
-        $countSql = $this->rewriteCountQuery($this->get($queryName));
-
-        return $countSql;
+        return $this->rewriteCountQuery($this->get($queryName));
     }
 
     /**
@@ -88,16 +78,12 @@ final class QueryLocator implements QueryLocatorInterface
     /**
      * Return count query
      *
-     * @param string $sql
-     *
-     * @return string
-     *
      * @see https://github.com/pear/Pager/blob/master/examples/Pager_Wrapper.php
      * Taken from pear/pager and modified.
      * tested at https://github.com/pear/Pager/blob/80c0e31c8b94f913cfbdeccbe83b63822f42a2f8/tests/pager_wrapper_test.php#L19
      * @codeCoverageIgnore
      */
-    private function rewriteCountQuery($sql)
+    private function rewriteCountQuery(string $sql) : string
     {
         if (preg_match('/^\s*SELECT\s+\bDISTINCT\b/is', $sql) || preg_match('/\s+GROUP\s+BY\s+/is', $sql)) {
             throw new CountQueryException($sql);
@@ -115,9 +101,31 @@ final class QueryLocator implements QueryLocatorInterface
             throw new CountQueryException($sql);
         }
         $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $sql, 1);
+        if (! is_string($queryCount)) {
+            throw new CountQueryException($sql);
+        }
         list($queryCount) = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
+        if (! is_string($queryCount)) {
+            throw new CountQueryException($sql);
+        }
         list($queryCount) = preg_split('/\bLIMIT\b/is', $queryCount);
+        if (! is_string($queryCount)) {
+            throw new CountQueryException($sql);
+        }
 
         return trim($queryCount);
+    }
+
+    private function getFileContents(string $file) : string
+    {
+        if (! file_exists($file)) {
+            throw new QueryFileNotFoundException($file);
+        }
+        $contents = file_get_contents($file);
+        if (! $contents) {
+            throw new QueryFileNotFoundException($file);
+        }
+
+        return $contents;
     }
 }

@@ -26,9 +26,4 @@ SQL files
     └── admin
         └── user.sql
 ```
-
-## Requirements
-
- * PHP 5.5+
- * hhvm
  
