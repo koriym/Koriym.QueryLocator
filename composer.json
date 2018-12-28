@@ -10,7 +10,7 @@
     },
     "require-dev": {
         "ray/di": "^2.7",
-        "phpunit/phpunit": "^5.7",
+        "phpunit/phpunit": "^7.5.1",
         "phpstan/phpstan-shim": "^0.10"
     },
     "autoload":{
