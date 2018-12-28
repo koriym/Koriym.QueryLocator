@@ -9,9 +9,9 @@
         "php": ">=7.1.0"
     },
     "require-dev": {
-        "ray/di": "^2.7.1",
+        "ray/di": "^2.7.2",
         "phpunit/phpunit": "^7.5.1",
-        "phpstan/phpstan-shim": "^0.10"
+        "phpstan/phpstan-shim": "^0.10.7"
     },
     "autoload":{
         "psr-4":{
