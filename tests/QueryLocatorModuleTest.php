@@ -1,17 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Koriym\QueryLocator;
 
-use Koriym\QueryLocator\Exception\CountQueryException;
-use Koriym\QueryLocator\Exception\QueryFileNotFoundException;
-use Koriym\QueryLocator\Exception\ReadOnlyException;
 use Ray\Di\Injector;
 
-class QueryLocatorModuleTest extends \PHPUnit_Framework_TestCase
+class QueryLocatorModuleTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetSql()
     {
-        /** @var $queryLocator QueryLocator */
+        /* @var QueryLocator $queryLocator  */
         $queryLocator = (new Injector(new QueryLocatorModule(__DIR__ . '/sql')))->getInstance(QueryLocatorInterface::class);
         $this->assertInstanceOf(QueryLocatorInterface::class, $queryLocator);
         $sql = $queryLocator->get('admin/user');

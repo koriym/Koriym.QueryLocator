@@ -1,9 +1,7 @@
 <?php
-/**
- * This file is part of the Koriym.QueryLocator package.
- *
- * @license http://opensource.org/licenses/MIT MIT
- */
+
+declare(strict_types=1);
+
 namespace Koriym\QueryLocator;
 
 use Ray\Di\AbstractModule;
@@ -15,11 +13,7 @@ class QueryLocatorModule extends AbstractModule
      */
     private $sqlDir;
 
-    /**
-     * @param string              $sqlDir
-     * @param AbstractModule|null $module
-     */
-    public function __construct($sqlDir, AbstractModule $module = null)
+    public function __construct(string $sqlDir, AbstractModule $module = null)
     {
         $this->sqlDir = $sqlDir;
         parent::__construct($module);
