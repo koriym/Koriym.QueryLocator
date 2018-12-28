@@ -24,7 +24,7 @@ final class QueryLocator implements QueryLocatorInterface
     /**
      * {@inheritdoc}
      */
-    public function get($queryName)
+    public function get(string $queryName) : string
     {
         $sqlFile = sprintf(
             '%s/%s.sql',
@@ -38,7 +38,7 @@ final class QueryLocator implements QueryLocatorInterface
     /**
      * {@inheritdoc}
      */
-    public function getCountQuery($queryName)
+    public function getCountQuery(string $queryName) : string
     {
         return $this->rewriteCountQuery($this->get($queryName));
     }

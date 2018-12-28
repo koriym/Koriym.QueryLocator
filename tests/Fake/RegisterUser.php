@@ -8,7 +8,7 @@ class RegisterUser implements QueryProviderInterface
     /**
      * @inheritDoc
      */
-    public function get()
+    public function get() : string
     {
         return 'REGISTER-USER-SQL';
     }
