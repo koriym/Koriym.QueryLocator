@@ -69,6 +69,7 @@ final class ApcQueryLocator implements QueryLocatorInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return (bool) $this->get($offset);
@@ -77,6 +78,7 @@ final class ApcQueryLocator implements QueryLocatorInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->get($offset);
@@ -85,6 +87,7 @@ final class ApcQueryLocator implements QueryLocatorInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         throw new ReadOnlyException('not supported');
@@ -93,6 +96,7 @@ final class ApcQueryLocator implements QueryLocatorInterface
     /**
      * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         throw new ReadOnlyException('not supported');

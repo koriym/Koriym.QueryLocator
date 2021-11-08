@@ -8,7 +8,7 @@ use Ray\Di\Injector;
 
 class QueryLocatorModuleTest extends \PHPUnit\Framework\TestCase
 {
-    public function testGetSql()
+    public function testGetSql(): void
     {
         /* @var QueryLocator $queryLocator  */
         $queryLocator = (new Injector(new QueryLocatorModule(__DIR__ . '/sql')))->getInstance(QueryLocatorInterface::class);

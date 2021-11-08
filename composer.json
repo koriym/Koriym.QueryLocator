@@ -6,12 +6,13 @@
     ],
     "license": "MIT",
     "require": {
-        "php": ">=7.1.0"
+        "php": ">=7.1.0",
+        "symfony/polyfill-php81": "^1.23"
     },
     "require-dev": {
         "ray/di": "^2.7.2",
-        "phpunit/phpunit": "^7.5.1",
-        "phpstan/phpstan-shim": "^0.10.7"
+        "phpunit/phpunit": "^9.5.10",
+        "vimeo/psalm": "^4.12"
     },
     "autoload":{
         "psr-4":{
