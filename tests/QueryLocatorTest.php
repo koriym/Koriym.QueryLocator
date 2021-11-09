@@ -52,8 +52,8 @@ class QueryLocatorTest extends \PHPUnit\Framework\TestCase
 
     public function testGetCountSql(): void
     {
-        $sql = $this->query->getCountQuery('admin/user');
-        $expected = 'SELECT COUNT(*) FROM usr;';
+        $sql = $this->query->getCountQuery('admin/user_count');
+        $expected = 'SELECT COUNT(*) FROM usr';
         $this->assertSame($expected, $sql);
     }
 

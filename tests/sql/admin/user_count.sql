@@ -1,0 +1,1 @@
+SELECT * FROM usr ORDER BY id LIMIT 1
