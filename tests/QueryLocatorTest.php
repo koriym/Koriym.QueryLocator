@@ -88,4 +88,10 @@ class QueryLocatorTest extends \PHPUnit\Framework\TestCase
         $this->expectException(ReadOnlyException::class);
         $this->query['admin/user'] = 'A SQL';
     }
+
+    public function testNotExists(): void
+    {
+        $this->expectException(QueryFileNotFoundException::class);
+        $this->query['admin/_not_existing_'];
+    }
 }

@@ -19,6 +19,6 @@ trait QueryLocatorInject
     #[Inject]
     public function setQueryLocator(QueryLocatorInterface $query)
     {
-        $this->query = $query;
+        $this->query = $query; // @codeCoverageIgnore
     }
 }

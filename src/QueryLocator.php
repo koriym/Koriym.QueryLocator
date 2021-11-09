@@ -121,9 +121,6 @@ final class QueryLocator implements QueryLocatorInterface
             throw new QueryFileNotFoundException($file);
         }
         $contents = file_get_contents($file);
-        if (! $contents) {
-            throw new QueryFileNotFoundException($file);
-        }
 
         return $contents;
     }

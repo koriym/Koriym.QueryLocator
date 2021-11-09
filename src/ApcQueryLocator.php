@@ -37,7 +37,7 @@ final class ApcQueryLocator implements QueryLocatorInterface
         /** @var ?string $sql */
         $sql = apcu_fetch($sqlId);
         if (is_string($sql)) {
-            return $sql;
+            return $sql; // @codeCoverageIgnore
         }
         $sql = $this->query->get($queryName);
         apcu_store($sqlId, $sql);
@@ -54,7 +54,7 @@ final class ApcQueryLocator implements QueryLocatorInterface
         /** @var ?string $sql */
         $sql = apcu_fetch($sqlId);
         if (is_string($sql)) {
-            return $sql;
+            return $sql; // @codeCoverageIgnore
         }
         $sql = $this->query->getCountQuery($queryName);
         apcu_store($sqlId, $sql);
