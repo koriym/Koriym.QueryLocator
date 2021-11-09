@@ -32,7 +32,7 @@
         "test": ["phpunit"],
         "tests": ["@cs", "psalm --show-info=false", "@test"],
         "coverage": ["php -dzend_extension=xdebug.so ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage"],
-        "cs": ["phpcs --standard=./phpcs.xml src"],
-        "cs-fix": ["phpcbf src"]
+        "cs": ["phpcs --standard=./phpcs.xml src tests"],
+        "cs-fix": ["phpcbf src tests"]
     }
 }

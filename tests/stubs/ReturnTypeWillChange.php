@@ -1,6 +1,5 @@
 <?php
-
-declare(strict_types=1);
+// phpcs:ignoreFile
 
 if (\PHP_VERSION_ID < 80100 && ! class_exists(ReturnTypeWillChange::class)) {
     #[Attribute(Attribute::TARGET_METHOD)]
