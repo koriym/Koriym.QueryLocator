@@ -6,13 +6,13 @@
     ],
     "license": "MIT",
     "require": {
-        "php": ">=7.1.0",
-        "symfony/polyfill-php81": "^1.23"
+        "php": ">=7.1.0"
     },
     "require-dev": {
         "ray/di": "^2.7.2",
         "phpunit/phpunit": "^9.5.10",
-        "vimeo/psalm": "^4.12"
+        "vimeo/psalm": "^4.12",
+        "doctrine/coding-standard": "^9.0"
     },
     "autoload":{
         "psr-4":{
@@ -32,7 +32,7 @@
         "test": ["phpunit"],
         "tests": ["@cs", "psalm --show-info=false", "@test"],
         "coverage": ["php -dzend_extension=xdebug.so ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage"],
-        "cs": ["php-cs-fixer fix -v --dry-run", "phpcs --standard=./phpcs.xml src"],
-        "cs-fix": ["php-cs-fixer fix -v", "phpcbf src"]
+        "cs": ["phpcs --standard=./phpcs.xml src"],
+        "cs-fix": ["phpcbf src"]
     }
 }

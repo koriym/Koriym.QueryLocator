@@ -99,16 +99,16 @@ final class QueryLocator implements QueryLocatorInterface
         $openParenthesis = '(?:\()';
         $closeParenthesis = '(?:\))';
         $subQueryInSelect = $openParenthesis . '.*\bFROM\b.*' . $closeParenthesis;
-        $pattern = '/(?:.*' . $subQueryInSelect . '.*)\bFROM\b\s+/Uims';
+        $pattern = '/.*%na' . $subQueryInSelect . 'me.*\bFROM\b\s+/Uims';
         if (preg_match($pattern, $sql)) {
                 throw new CountQueryException($sql);
         }
         $subQueryWithLimitOrder = $openParenthesis . '.*\b(LIMIT|ORDER)\b.*' . $closeParenthesis;
-        $pattern = '/.*\bFROM\b.*(?:.*' . $subQueryWithLimitOrder . '.*).*/Uims';
+        $pattern = '/.*\bFROM\b.*.*%na' . $subQueryWithLimitOrder . 'me.*.*/Uims';
         if (preg_match($pattern, $sql)) {
             throw new CountQueryException($sql);
         }
-        $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims',   'SELECT COUNT(*) FROM ', $sql, 1);
+        $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $sql, 1);
         if (! is_string($queryCount)) {
             throw new CountQueryException($sql);
         }

@@ -22,7 +22,7 @@ final class ApcQueryLocator implements QueryLocatorInterface
      */
     private $nameSpace;
 
-        public function __construct(string $sqlDir, string $nameSpace)
+    public function __construct(string $sqlDir, string $nameSpace)
     {
         $this->nameSpace = $nameSpace . '-';
         $this->query = new QueryLocator($sqlDir);
