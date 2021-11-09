@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Koriym\QueryLocator;
 
 use Koriym\QueryLocator\Exception\ReadOnlyException;
+use ReturnTypeWillChange;
+use function is_string;
 
 final class ApcQueryLocator implements QueryLocatorInterface
 {
@@ -20,17 +22,9 @@ final class ApcQueryLocator implements QueryLocatorInterface
      */
     private $nameSpace;
 
-    /**
-     * SQL directory
-     *
-     * @var string
-     */
-    private $sqlDir;
-
     public function __construct(string $sqlDir, string $nameSpace)
     {
         $this->nameSpace = $nameSpace . '-';
-        $this->sqlDir = $sqlDir;
         $this->query = new QueryLocator($sqlDir);
     }
 
@@ -40,9 +34,10 @@ final class ApcQueryLocator implements QueryLocatorInterface
     public function get(string $queryName) : string
     {
         $sqlId = $this->nameSpace . $queryName;
+        /** @var ?string $sql */
         $sql = apcu_fetch($sqlId);
-        if (\is_string($sql)) {
-            return $sql;
+        if (is_string($sql)) {
+            return $sql; // @codeCoverageIgnore
         }
         $sql = $this->query->get($queryName);
         apcu_store($sqlId, $sql);
@@ -56,9 +51,10 @@ final class ApcQueryLocator implements QueryLocatorInterface
     public function getCountQuery(string $queryName) : string
     {
         $sqlId = $this->nameSpace . $queryName;
+        /** @var ?string $sql */
         $sql = apcu_fetch($sqlId);
-        if (\is_string($sql)) {
-            return $sql;
+        if (is_string($sql)) {
+            return $sql; // @codeCoverageIgnore
         }
         $sql = $this->query->getCountQuery($queryName);
         apcu_store($sqlId, $sql);
@@ -69,22 +65,27 @@ final class ApcQueryLocator implements QueryLocatorInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function offsetExists($offset)
     {
+        assert(is_string($offset));
         return (bool) $this->get($offset);
     }
 
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
+        assert(is_string($offset));
         return $this->get($offset);
     }
 
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         throw new ReadOnlyException('not supported');
@@ -93,6 +94,7 @@ final class ApcQueryLocator implements QueryLocatorInterface
     /**
      * {@inheritdoc}
      */
+    #[ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         throw new ReadOnlyException('not supported');

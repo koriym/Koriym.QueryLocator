@@ -11,7 +11,7 @@ class ApcQueryLocatorTest extends QueryLocatorTest
      */
     protected $query;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $sqlDir = __DIR__ . '/sql';

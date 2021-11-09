@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Koriym\QueryLocator;
-
-use function function_exists;
-
 if (! function_exists('apcu_fetch')) {
     function apcu_fetch($key)
     {
