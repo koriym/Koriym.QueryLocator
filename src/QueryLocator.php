@@ -108,20 +108,11 @@ final class QueryLocator implements QueryLocatorInterface
         if (preg_match($pattern, $sql)) {
             throw new CountQueryException($sql);
         }
-        $queryCount = preg_replace('/(?:.*)\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $sql, 1);
-        if (! is_string($queryCount)) {
-            throw new CountQueryException($sql);
-        }
-        $splitOrder = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
-        if ($splitOrder === false) {
-            throw new CountQueryException($sql);
-        }
-        $splitLimit = preg_split('/\bLIMIT\b/is', $splitOrder[0]);
-        if ($splitOrder === false) {
-            throw new CountQueryException($sql);
-        }
+        $queryCount = preg_replace('/.*\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $sql, 1);
+        [$oderSplited] = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
+        [$limitSplited] = preg_split('/\bLIMIT\b/is', $oderSplited);
 
-        return trim($splitLimit[0]);
+        return trim($limitSplited);
     }
 
     private function getFileContents(string $file) : string
