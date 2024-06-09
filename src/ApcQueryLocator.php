@@ -53,6 +53,7 @@ final class ApcQueryLocator implements QueryLocatorInterface
         $sqlId = $this->nameSpace . $queryName;
         /** @var ?string $sql */
         $apcuId = __NAMESPACE__ . '-sqlId-' . $sqlId;
+        /** @psalm-suppress MixedAssignment */
         $sql = apcu_fetch($apcuId);
         if (is_string($sql)) {
             return $sql; // @codeCoverageIgnore
