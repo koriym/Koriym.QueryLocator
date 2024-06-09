@@ -52,12 +52,13 @@ final class ApcQueryLocator implements QueryLocatorInterface
     {
         $sqlId = $this->nameSpace . $queryName;
         /** @var ?string $sql */
-        $sql = apcu_fetch($sqlId);
+        $apcuId = __NAMESPACE__ . '-sqlId-' . $sqlId;
+        $sql = apcu_fetch($apcuId);
         if (is_string($sql)) {
             return $sql; // @codeCoverageIgnore
         }
         $sql = $this->query->getCountQuery($queryName);
-        apcu_store($sqlId, $sql);
+        apcu_store($apcuId, $sql);
 
         return $sql;
     }
