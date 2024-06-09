@@ -34,5 +34,10 @@
         "coverage": ["php -dzend_extension=xdebug.so -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage"],
         "cs": ["phpcs --standard=./phpcs.xml src tests"],
         "cs-fix": ["phpcbf src tests"]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }
