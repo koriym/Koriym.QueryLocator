@@ -60,7 +60,6 @@ class QueryLocatorTest extends \PHPUnit\Framework\TestCase
     public function testGetCountSqlCached(): void
     {
         $sql = $this->query->getCountQuery('admin/user');
-        $sql = $this->query->getCountQuery('admin/user');
         $expected = 'SELECT COUNT(*) FROM usr;';
         $this->assertSame($expected, $sql);
     }
