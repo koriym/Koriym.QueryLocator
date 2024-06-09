@@ -51,9 +51,8 @@ final class ApcQueryLocator implements QueryLocatorInterface
     public function getCountQuery(string $queryName) : string
     {
         $sqlId = $this->nameSpace . $queryName;
-        /** @var ?string $sql */
         $apcuId = __NAMESPACE__ . '-sqlId-' . $sqlId;
-        /** @psalm-suppress MixedAssignment */
+        /** @var ?string $sql */
         $sql = apcu_fetch($apcuId);
         if (is_string($sql)) {
             return $sql; // @codeCoverageIgnore

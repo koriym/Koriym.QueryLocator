@@ -8,6 +8,7 @@ use Koriym\QueryLocator\Exception\CountQueryException;
 use Koriym\QueryLocator\Exception\QueryFileNotFoundException;
 use Koriym\QueryLocator\Exception\ReadOnlyException;
 use ReturnTypeWillChange;
+use function is_array;
 use function is_string;
 
 final class QueryLocator implements QueryLocatorInterface
@@ -109,8 +110,9 @@ final class QueryLocator implements QueryLocatorInterface
             throw new CountQueryException($sql);
         }
         $queryCount = preg_replace('/.*\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $sql, 1);
-        [$orderSplit] = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
-        [$limitSplit] = preg_split('/\bLIMIT\b/is', $orderSplit);
+        assert(is_string($queryCount));
+        [$orderSplit] = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount); // @phpstan-ignore-line
+        [$limitSplit] = preg_split('/\bLIMIT\b/is', $orderSplit); // @phpstan-ignore-line
 
         return trim($limitSplit);
     }
@@ -120,7 +122,7 @@ final class QueryLocator implements QueryLocatorInterface
         if (! file_exists($file)) {
             throw new QueryFileNotFoundException($file);
         }
-        $contents = file_get_contents($file);
+        $contents = (string) file_get_contents($file);
 
         return $contents;
     }

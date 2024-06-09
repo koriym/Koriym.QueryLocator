@@ -12,7 +12,8 @@
         "ray/di": "^2.7.2",
         "phpunit/phpunit": "^9.5.10",
         "vimeo/psalm": "^4.12",
-        "doctrine/coding-standard": "^9.0"
+        "doctrine/coding-standard": "^9.0",
+        "phpstan/phpstan": "^1.11"
     },
     "autoload":{
         "psr-4":{
@@ -33,7 +34,8 @@
         "tests": ["@cs", "psalm --show-info=false", "@test"],
         "coverage": ["php -dzend_extension=xdebug.so -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage"],
         "cs": ["phpcs --standard=./phpcs.xml src tests"],
-        "cs-fix": ["phpcbf src tests"]
+        "cs-fix": ["phpcbf src tests"],
+        "sa": ["psalm --show-info=false", "phpstan"]
     },
     "config": {
         "allow-plugins": {

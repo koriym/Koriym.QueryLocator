@@ -9,7 +9,7 @@ class ApcQueryLocatorTest extends QueryLocatorTest
     /**
      * @var ApcQueryLocator
      */
-    protected $query;
+    protected $query;  // @phpstan-ignore-line
 
     protected function setUp(): void
     {
