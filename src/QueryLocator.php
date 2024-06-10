@@ -51,8 +51,6 @@ final class QueryLocator implements QueryLocatorInterface
     #[ReturnTypeWillChange]
     public function offsetExists($offset)
     {
-        assert(is_string($offset));
-
         return (bool) $this->get($offset);
     }
 
@@ -62,7 +60,6 @@ final class QueryLocator implements QueryLocatorInterface
     #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        assert(is_string($offset));
         return $this->get($offset);
     }
 

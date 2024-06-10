@@ -69,7 +69,6 @@ final class ApcQueryLocator implements QueryLocatorInterface
     #[ReturnTypeWillChange]
     public function offsetExists($offset)
     {
-        assert(is_string($offset));
         return (bool) $this->get($offset);
     }
 
@@ -79,7 +78,6 @@ final class ApcQueryLocator implements QueryLocatorInterface
     #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        assert(is_string($offset));
         return $this->get($offset);
     }
 
