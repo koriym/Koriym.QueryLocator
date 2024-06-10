@@ -22,7 +22,7 @@ $sql = $query->getCountQuery('admin/user'); // SELECT COUNT(*) FROM user;
 
 SQL files
 
-```
+```text
 └── sql
     └── admin
         └── user.sql
