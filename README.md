@@ -9,7 +9,7 @@
 ### Composer install
 
     $ composer require koriym/query-locator
- 
+
 ### Usage
 
 ```php
@@ -21,9 +21,9 @@ $sql = $query->getCountQuery('admin/user'); // SELECT COUNT(*) FROM user;
 ```
 
 SQL files
+
 ```
 └── sql
     └── admin
         └── user.sql
 ```
- 
