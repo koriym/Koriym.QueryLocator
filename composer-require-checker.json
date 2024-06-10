@@ -4,6 +4,6 @@
     "static", "self", "parent",
     "array", "string", "int", "float", "bool", "iterable", "callable", "void", "object", "mixed",
     "apcu_fetch", "apcu_store",
-    "Ray\\Di\\AbstractModule", "Ray\\Di\\Inject"
+    "Ray\\Di\\AbstractModule", "Ray\\Di\\Di\\Inject"
   ]
 }
