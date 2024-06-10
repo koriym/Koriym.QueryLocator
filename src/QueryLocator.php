@@ -8,6 +8,7 @@ use Koriym\QueryLocator\Exception\CountQueryException;
 use Koriym\QueryLocator\Exception\QueryFileNotFoundException;
 use Koriym\QueryLocator\Exception\ReadOnlyException;
 use ReturnTypeWillChange;
+use function is_array;
 use function is_string;
 
 final class QueryLocator implements QueryLocatorInterface
@@ -50,8 +51,6 @@ final class QueryLocator implements QueryLocatorInterface
     #[ReturnTypeWillChange]
     public function offsetExists($offset)
     {
-        assert(is_string($offset));
-
         return (bool) $this->get($offset);
     }
 
@@ -61,7 +60,6 @@ final class QueryLocator implements QueryLocatorInterface
     #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        assert(is_string($offset));
         return $this->get($offset);
     }
 
@@ -109,10 +107,11 @@ final class QueryLocator implements QueryLocatorInterface
             throw new CountQueryException($sql);
         }
         $queryCount = preg_replace('/.*\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $sql, 1);
-        [$oderSplited] = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
-        [$limitSplited] = preg_split('/\bLIMIT\b/is', $oderSplited);
+        assert(is_string($queryCount));
+        [$orderSplit] = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount); // @phpstan-ignore-line
+        [$limitSplit] = preg_split('/\bLIMIT\b/is', $orderSplit); // @phpstan-ignore-line
 
-        return trim($limitSplited);
+        return trim($limitSplit);
     }
 
     private function getFileContents(string $file) : string
@@ -120,7 +119,7 @@ final class QueryLocator implements QueryLocatorInterface
         if (! file_exists($file)) {
             throw new QueryFileNotFoundException($file);
         }
-        $contents = file_get_contents($file);
+        $contents = (string) file_get_contents($file);
 
         return $contents;
     }

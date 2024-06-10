@@ -51,13 +51,14 @@ final class ApcQueryLocator implements QueryLocatorInterface
     public function getCountQuery(string $queryName) : string
     {
         $sqlId = $this->nameSpace . $queryName;
+        $apcuId = __NAMESPACE__ . '-sqlId-' . $sqlId;
         /** @var ?string $sql */
-        $sql = apcu_fetch($sqlId);
+        $sql = apcu_fetch($apcuId);
         if (is_string($sql)) {
             return $sql; // @codeCoverageIgnore
         }
         $sql = $this->query->getCountQuery($queryName);
-        apcu_store($sqlId, $sql);
+        apcu_store($apcuId, $sql);
 
         return $sql;
     }
@@ -68,7 +69,6 @@ final class ApcQueryLocator implements QueryLocatorInterface
     #[ReturnTypeWillChange]
     public function offsetExists($offset)
     {
-        assert(is_string($offset));
         return (bool) $this->get($offset);
     }
 
@@ -78,7 +78,6 @@ final class ApcQueryLocator implements QueryLocatorInterface
     #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        assert(is_string($offset));
         return $this->get($offset);
     }
 

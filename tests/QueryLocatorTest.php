@@ -47,7 +47,7 @@ class QueryLocatorTest extends \PHPUnit\Framework\TestCase
     public function testNotFound(): void
     {
         $this->expectException(QueryFileNotFoundException::class);
-        $this->query['user/not_exist_sql'];
+        $this->query['user/not_exist_sql']; // @phpstan-ignore-line
     }
 
     public function testGetCountSql(): void
@@ -59,7 +59,6 @@ class QueryLocatorTest extends \PHPUnit\Framework\TestCase
 
     public function testGetCountSqlCached(): void
     {
-        $sql = $this->query->getCountQuery('admin/user');
         $sql = $this->query->getCountQuery('admin/user');
         $expected = 'SELECT COUNT(*) FROM usr;';
         $this->assertSame($expected, $sql);
@@ -92,6 +91,6 @@ class QueryLocatorTest extends \PHPUnit\Framework\TestCase
     public function testNotExists(): void
     {
         $this->expectException(QueryFileNotFoundException::class);
-        $this->query['admin/_not_existing_'];
+        $this->query['admin/_not_existing_']; // @phpstan-ignore-line
     }
 }
