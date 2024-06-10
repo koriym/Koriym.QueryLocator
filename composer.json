@@ -13,7 +13,8 @@
         "phpunit/phpunit": "^9.5.10",
         "vimeo/psalm": "^4.12",
         "doctrine/coding-standard": "^9.0",
-        "phpstan/phpstan": "^1.11"
+        "phpstan/phpstan": "^1.11",
+        "phpmd/phpmd": "^2.15"
     },
     "autoload":{
         "psr-4":{
