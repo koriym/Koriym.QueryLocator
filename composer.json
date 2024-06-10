@@ -1,6 +1,6 @@
 {
     "name": "koriym/query-locator",
-    "description":"A SQL query locator",
+    "description":"Load and manage SQL queries from files",
     "keywords":[
         "SQL"
     ],
