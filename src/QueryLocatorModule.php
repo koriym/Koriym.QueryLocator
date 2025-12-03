@@ -24,7 +24,9 @@ class QueryLocatorModule extends AbstractModule
      */
     protected function configure()
     {
+        /** @psalm-suppress InvalidArgument */
         $this->bind()->annotatedWith('sql_dir')->toInstance($this->sqlDir);
+        /** @psalm-suppress InvalidArgument */
         $this->bind(QueryLocatorInterface::class)->toConstructor(QueryLocator::class, 'sqlDir=sql_dir');
     }
 }
