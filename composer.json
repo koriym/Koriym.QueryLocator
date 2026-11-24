@@ -30,8 +30,8 @@
     },
     "scripts" :{
         "bin": "echo 'bamarni/composer-bin-plugin is not installed: vendor-bin tools skipped.'",
-        "post-install-cmd": ["@composer bin all install --ansi --ignore-platform-req=php"],
-        "post-update-cmd": ["@composer bin all update --ansi --ignore-platform-req=php"],
+        "post-install-cmd": ["@composer bin all install --ansi --ignore-platform-req=php+"],
+        "post-update-cmd": ["@composer bin all update --ansi --ignore-platform-req=php+"],
         "test": ["phpunit"],
         "tests": ["@cs", "@sa", "@test"],
         "coverage": ["php -dzend_extension=xdebug.so -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage"],
