@@ -10,17 +10,16 @@ use Koriym\QueryLocator\Exception\LogicException;
 use Koriym\QueryLocator\Exception\QueryFileNotFoundException;
 use Koriym\QueryLocator\Exception\ReadOnlyException;
 use Koriym\QueryLocator\Exception\RuntimeException;
+use PHPUnit\Framework\TestCase;
 
-class QueryLocatorTest extends \PHPUnit\Framework\TestCase
+class QueryLocatorTest extends TestCase
 {
-    /**
-     * @var QueryLocator
-     */
-    protected $query;
+    protected QueryLocatorInterface $query;
 
     protected function setUp(): void
     {
         parent::setUp();
+
         $sqlDir = __DIR__ . '/sql';
         $this->query = new QueryLocator($sqlDir);
     }
@@ -50,7 +49,7 @@ class QueryLocatorTest extends \PHPUnit\Framework\TestCase
     public function testNotFound(): void
     {
         $this->expectException(QueryFileNotFoundException::class);
-        $this->query['user/not_exist_sql']; // @phpstan-ignore-line
+        $this->assertIsString($this->query['user/not_exist_sql']);
     }
 
     public function testGetCountSql(): void
@@ -94,7 +93,7 @@ class QueryLocatorTest extends \PHPUnit\Framework\TestCase
     public function testNotExists(): void
     {
         $this->expectException(QueryFileNotFoundException::class);
-        $this->query['admin/_not_existing_']; // @phpstan-ignore-line
+        $this->assertIsString($this->query['admin/_not_existing_']);
     }
 
     public function testGetSqlIsTrimmed(): void
@@ -125,6 +124,18 @@ class QueryLocatorTest extends \PHPUnit\Framework\TestCase
         $this->query->getCountQuery('admin/group_by');
     }
 
+    public function testGetCountSqlSubQueryInSelectFailed(): void
+    {
+        $this->expectException(CountQueryException::class);
+        $this->query->getCountQuery('admin/subquery_in_select');
+    }
+
+    public function testGetCountSqlSubQueryWithLimitFailed(): void
+    {
+        $this->expectException(CountQueryException::class);
+        $this->query->getCountQuery('admin/subquery_with_limit');
+    }
+
     public function testGetCountSqlFailedMessageIsSql(): void
     {
         $this->expectExceptionMessage('SELECT DISTINCT id FROM usr;');
@@ -146,7 +157,7 @@ class QueryLocatorTest extends \PHPUnit\Framework\TestCase
     public function testOffsetExistsNotFound(): void
     {
         $this->expectException(QueryFileNotFoundException::class);
-        isset($this->query['admin/_not_existing_']);
+        $this->assertTrue(isset($this->query['admin/_not_existing_']));
     }
 
     public function testReadOnlyMessage(): void

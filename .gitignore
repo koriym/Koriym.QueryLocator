@@ -9,5 +9,7 @@ nbproject
 cache.properties
 build
 vendor/
-.php_cs.cache
+.phpunit.cache
+.phpunit.result.cache
 composer.lock
+.phpcs-cache

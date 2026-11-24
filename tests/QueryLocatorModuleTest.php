@@ -6,14 +6,14 @@ namespace Koriym\QueryLocator;
 
 use MyVendor\MyPacakge\FakeQueryConsumer;
 use MyVendor\MyPacakge\RegisterUser;
+use PHPUnit\Framework\TestCase;
 use Ray\Di\AbstractModule;
 use Ray\Di\Injector;
 
-class QueryLocatorModuleTest extends \PHPUnit\Framework\TestCase
+class QueryLocatorModuleTest extends TestCase
 {
     public function testGetSql(): void
     {
-        /* @var QueryLocator $queryLocator  */
         $queryLocator = (new Injector(new QueryLocatorModule(__DIR__ . '/sql')))->getInstance(QueryLocatorInterface::class);
         $this->assertInstanceOf(QueryLocatorInterface::class, $queryLocator);
         $sql = $queryLocator->get('admin/user');
@@ -50,7 +50,13 @@ class QueryLocatorModuleTest extends \PHPUnit\Framework\TestCase
 
     public function testQueryLocatorInject(): void
     {
-        $consumer = (new Injector(new QueryLocatorModule(__DIR__ . '/sql')))->getInstance(FakeQueryConsumer::class);
+        $module = new class extends AbstractModule {
+            protected function configure(): void
+            {
+                $this->bind(FakeQueryConsumer::class);
+            }
+        };
+        $consumer = (new Injector(new QueryLocatorModule(__DIR__ . '/sql', $module)))->getInstance(FakeQueryConsumer::class);
         $this->assertInstanceOf(FakeQueryConsumer::class, $consumer);
         $this->assertSame('SELECT * FROM usr;', $consumer->getSql('admin/user'));
     }

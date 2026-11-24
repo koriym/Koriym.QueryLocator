@@ -1,0 +1,1 @@
+SELECT * FROM usr WHERE id IN %na(SELECT id FROM post ORDER BY id LIMIT 1)me

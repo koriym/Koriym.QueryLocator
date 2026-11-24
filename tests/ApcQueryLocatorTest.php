@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Koriym\QueryLocator;
 
+use function apcu_enabled;
+use function apcu_fetch;
+use function apcu_store;
+use function function_exists;
+
 class ApcQueryLocatorTest extends QueryLocatorTest
 {
-    /**
-     * @var ApcQueryLocator
-     */
-    protected $query;  // @phpstan-ignore-line
-
     protected function setUp(): void
     {
         parent::setUp();
+
         $sqlDir = __DIR__ . '/sql';
         $this->query = new ApcQueryLocator($sqlDir, 'foo-namespace');
     }

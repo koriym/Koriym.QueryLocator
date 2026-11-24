@@ -6,15 +6,12 @@
     ],
     "license": "MIT",
     "require": {
-        "php": ">=7.1.0"
+        "php": "^8.2"
     },
     "require-dev": {
-        "ray/di": "^2.7.2",
-        "phpunit/phpunit": "^9.5.10",
-        "vimeo/psalm": "^4.12",
-        "doctrine/coding-standard": "^9.0",
-        "phpstan/phpstan": "^1.11",
-        "phpmd/phpmd": "^2.15"
+        "bamarni/composer-bin-plugin": "^1.8",
+        "phpunit/phpunit": "^11.5",
+        "ray/di": "^2.16"
     },
     "autoload":{
         "psr-4":{
@@ -31,16 +28,24 @@
         "ext-apcu": "*"
     },
     "scripts" :{
+        "post-install-cmd": ["@composer bin all install --ansi --ignore-platform-req=php"],
+        "post-update-cmd": ["@composer bin all update --ansi --ignore-platform-req=php"],
         "test": ["phpunit"],
-        "tests": ["@cs", "psalm --show-info=false", "@test"],
+        "tests": ["@cs", "@sa", "@test"],
         "coverage": ["php -dzend_extension=xdebug.so -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage"],
-        "cs": ["phpcs --standard=./phpcs.xml src tests"],
-        "cs-fix": ["phpcbf src tests"],
-        "sa": ["psalm", "phpstan"]
+        "cs": ["phpcs"],
+        "cs-fix": ["phpcbf"],
+        "sa": ["psalm --show-info=false", "phpstan analyse -c phpstan.neon --no-progress", "phpmd analyze src --format text --ruleset ./phpmd.xml"]
     },
     "config": {
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "bamarni/composer-bin-plugin": true
+        }
+    },
+    "extra": {
+        "bamarni-bin": {
+            "bin-links": true,
+            "forward-command": false
         }
     }
 }
