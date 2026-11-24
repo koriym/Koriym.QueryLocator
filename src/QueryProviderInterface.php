@@ -6,5 +6,5 @@ namespace Koriym\QueryLocator;
 
 interface QueryProviderInterface
 {
-    public function get() : string;
+    public function get(): string;
 }

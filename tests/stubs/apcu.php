@@ -2,24 +2,22 @@
 
 declare(strict_types=1);
 
+// In-memory APCu replacement for environments without ext-apcu.
 if (! function_exists('apcu_fetch')) {
-    /**
-     * @return string|false
-     */
-    function apcu_fetch(string $key)
+    final class ApcuStubStore
     {
-        return isset($GLOBALS[__NAMESPACE__ . $key]) ? $GLOBALS[__NAMESPACE__ . $key] : false;
+        /** @var array<string, mixed> */
+        public static array $values = [];
     }
 
-    /**
-     * @param string $key
-     * @param mixed  $var
-     *
-     * @return true
-     */
-    function apcu_store($key, $var)
+    function apcu_fetch(string $key): mixed
     {
-        $GLOBALS[__NAMESPACE__ . $key] = $var;
+        return ApcuStubStore::$values[$key] ?? false;
+    }
+
+    function apcu_store(string $key, mixed $var): bool
+    {
+        ApcuStubStore::$values[$key] = $var;
 
         return true;
     }

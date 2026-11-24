@@ -1,0 +1,5 @@
+SELECT id, name
+FROM usr
+WHERE id > 1
+ORDER BY id DESC
+LIMIT 10
