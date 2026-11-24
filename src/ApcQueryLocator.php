@@ -5,22 +5,18 @@ declare(strict_types=1);
 namespace Koriym\QueryLocator;
 
 use Koriym\QueryLocator\Exception\ReadOnlyException;
-use ReturnTypeWillChange;
+use Override;
+
+use function apcu_fetch;
+use function apcu_store;
 use function is_string;
 
 final class ApcQueryLocator implements QueryLocatorInterface
 {
-    /**
-     * @var QueryLocator
-     */
-    private $query;
+    private readonly QueryLocator $query;
 
-    /**
-     * Cache prefix
-     *
-     * @var string
-     */
-    private $nameSpace;
+    /** Cache key prefix */
+    private readonly string $nameSpace;
 
     public function __construct(string $sqlDir, string $nameSpace)
     {
@@ -28,73 +24,59 @@ final class ApcQueryLocator implements QueryLocatorInterface
         $this->query = new QueryLocator($sqlDir);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get(string $queryName) : string
+    #[Override]
+    public function get(string $queryName): string
     {
         $sqlId = $this->nameSpace . $queryName;
-        /** @var ?string $sql */
+        /** @var mixed $sql */
         $sql = apcu_fetch($sqlId);
         if (is_string($sql)) {
-            return $sql; // @codeCoverageIgnore
+            return $sql;
         }
+
         $sql = $this->query->get($queryName);
         apcu_store($sqlId, $sql);
 
         return $sql;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCountQuery(string $queryName) : string
+    #[Override]
+    public function getCountQuery(string $queryName): string
     {
         $sqlId = $this->nameSpace . $queryName;
         $apcuId = __NAMESPACE__ . '-sqlId-' . $sqlId;
-        /** @var ?string $sql */
+        /** @var mixed $sql */
         $sql = apcu_fetch($apcuId);
         if (is_string($sql)) {
-            return $sql; // @codeCoverageIgnore
+            return $sql;
         }
+
         $sql = $this->query->getCountQuery($queryName);
         apcu_store($apcuId, $sql);
 
         return $sql;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    #[ReturnTypeWillChange]
-    public function offsetExists($offset)
+    #[Override]
+    public function offsetExists(mixed $offset): bool
     {
         return (bool) $this->get($offset);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    #[ReturnTypeWillChange]
-    public function offsetGet($offset)
+    #[Override]
+    public function offsetGet(mixed $offset): string
     {
         return $this->get($offset);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    #[ReturnTypeWillChange]
-    public function offsetSet($offset, $value)
+    #[Override]
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         throw new ReadOnlyException('not supported');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    #[ReturnTypeWillChange]
-    public function offsetUnset($offset)
+    #[Override]
+    public function offsetUnset(mixed $offset): void
     {
         throw new ReadOnlyException('not supported');
     }

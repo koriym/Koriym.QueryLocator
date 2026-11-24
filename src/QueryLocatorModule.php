@@ -4,29 +4,28 @@ declare(strict_types=1);
 
 namespace Koriym\QueryLocator;
 
+use Override;
 use Ray\Di\AbstractModule;
 
+/** @psalm-api */
 class QueryLocatorModule extends AbstractModule
 {
-    /**
-     * @var string
-     */
-    private $sqlDir;
-
-    public function __construct(string $sqlDir, AbstractModule $module = null)
-    {
-        $this->sqlDir = $sqlDir;
+    public function __construct(
+        private readonly string $sqlDir,
+        AbstractModule|null $module = null,
+    ) {
         parent::__construct($module);
     }
 
     /**
-     * {@inheritdoc}
+     * No native return type: subclasses overriding configure() without one must stay compatible.
+     *
+     * @return void
      */
+    #[Override]
     protected function configure()
     {
-        /** @psalm-suppress InvalidArgument */
         $this->bind()->annotatedWith('sql_dir')->toInstance($this->sqlDir);
-        /** @psalm-suppress InvalidArgument */
         $this->bind(QueryLocatorInterface::class)->toConstructor(QueryLocator::class, 'sqlDir=sql_dir');
     }
 }

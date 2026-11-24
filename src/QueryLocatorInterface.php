@@ -6,18 +6,16 @@ namespace Koriym\QueryLocator;
 
 use ArrayAccess;
 
-/**
- * @extends ArrayAccess<string, string>
- */
-interface QueryLocatorInterface extends \ArrayAccess
+/** @extends ArrayAccess<string, string> */
+interface QueryLocatorInterface extends ArrayAccess
 {
     /**
      * Get SQL
      */
-    public function get(string $queryName) : string;
+    public function get(string $queryName): string;
 
     /**
      * Get count query SQL
      */
-    public function getCountQuery(string $queryName) : string;
+    public function getCountQuery(string $queryName): string;
 }

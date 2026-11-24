@@ -7,76 +7,64 @@ namespace Koriym\QueryLocator;
 use Koriym\QueryLocator\Exception\CountQueryException;
 use Koriym\QueryLocator\Exception\QueryFileNotFoundException;
 use Koriym\QueryLocator\Exception\ReadOnlyException;
-use ReturnTypeWillChange;
+use Override;
+
+use function assert;
+use function file_exists;
+use function file_get_contents;
 use function is_array;
 use function is_string;
+use function preg_match;
+use function preg_replace;
+use function preg_split;
+use function sprintf;
+use function trim;
 
 final class QueryLocator implements QueryLocatorInterface
 {
-    /**
-     * @var string
-     */
-    private $sqlDir;
-
-    public function __construct(string $sqlDir)
-    {
-        $this->sqlDir = $sqlDir;
+    public function __construct(
+        private readonly string $sqlDir,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get(string $queryName) : string
+    #[Override]
+    public function get(string $queryName): string
     {
         $sqlFile = sprintf(
             '%s/%s.sql',
             $this->sqlDir,
-            $queryName
+            $queryName,
         );
 
         return trim($this->getFileContents($sqlFile));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCountQuery(string $queryName) : string
+    #[Override]
+    public function getCountQuery(string $queryName): string
     {
         return $this->rewriteCountQuery($this->get($queryName));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    #[ReturnTypeWillChange]
-    public function offsetExists($offset)
+    #[Override]
+    public function offsetExists(mixed $offset): bool
     {
         return (bool) $this->get($offset);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    #[ReturnTypeWillChange]
-    public function offsetGet($offset)
+    #[Override]
+    public function offsetGet(mixed $offset): string
     {
         return $this->get($offset);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    #[ReturnTypeWillChange]
-    public function offsetSet($offset, $value)
+    #[Override]
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         throw new ReadOnlyException('not supported');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    #[ReturnTypeWillChange]
-    public function offsetUnset($offset)
+    #[Override]
+    public function offsetUnset(mixed $offset): void
     {
         throw new ReadOnlyException('not supported');
     }
@@ -84,43 +72,47 @@ final class QueryLocator implements QueryLocatorInterface
     /**
      * Return count query
      *
-     * @see https://github.com/pear/Pager/blob/master/examples/Pager_Wrapper.php
      * Taken from pear/pager and modified.
-     * tested at https://github.com/pear/Pager/blob/80c0e31c8b94f913cfbdeccbe83b63822f42a2f8/tests/pager_wrapper_test.php#L19
-     * @codeCoverageIgnore
+     *
+     * @see https://github.com/pear/Pager/blob/master/examples/Pager_Wrapper.php
+     * @see https://github.com/pear/Pager/blob/80c0e31c8b94f913cfbdeccbe83b63822f42a2f8/tests/pager_wrapper_test.php#L19
      */
-    private function rewriteCountQuery(string $sql) : string
+    private function rewriteCountQuery(string $sql): string
     {
         if (preg_match('/^\s*SELECT\s+\bDISTINCT\b/is', $sql) || preg_match('/\s+GROUP\s+BY\s+/is', $sql)) {
             throw new CountQueryException($sql);
         }
+
         $openParenthesis = '(?:\()';
         $closeParenthesis = '(?:\))';
         $subQueryInSelect = $openParenthesis . '.*\bFROM\b.*' . $closeParenthesis;
         $pattern = '/.*%na' . $subQueryInSelect . 'me.*\bFROM\b\s+/Uims';
         if (preg_match($pattern, $sql)) {
-                throw new CountQueryException($sql);
+            throw new CountQueryException($sql);
         }
+
         $subQueryWithLimitOrder = $openParenthesis . '.*\b(LIMIT|ORDER)\b.*' . $closeParenthesis;
         $pattern = '/.*\bFROM\b.*.*%na' . $subQueryWithLimitOrder . 'me.*.*/Uims';
         if (preg_match($pattern, $sql)) {
             throw new CountQueryException($sql);
         }
+
         $queryCount = preg_replace('/.*\bFROM\b\s+/Uims', 'SELECT COUNT(*) FROM ', $sql, 1);
         assert(is_string($queryCount));
-        [$orderSplit] = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount); // @phpstan-ignore-line
-        [$limitSplit] = preg_split('/\bLIMIT\b/is', $orderSplit); // @phpstan-ignore-line
+        $orderSplit = preg_split('/\s+ORDER\s+BY\s+/is', $queryCount);
+        assert(is_array($orderSplit));
+        $limitSplit = preg_split('/\bLIMIT\b/is', $orderSplit[0]);
+        assert(is_array($limitSplit));
 
-        return trim($limitSplit);
+        return trim($limitSplit[0]);
     }
 
-    private function getFileContents(string $file) : string
+    private function getFileContents(string $file): string
     {
         if (! file_exists($file)) {
             throw new QueryFileNotFoundException($file);
         }
-        $contents = (string) file_get_contents($file);
 
-        return $contents;
+        return (string) file_get_contents($file);
     }
 }
