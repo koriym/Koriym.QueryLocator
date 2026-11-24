@@ -25,7 +25,8 @@
         }
     },
     "suggest": {
-        "ext-apcu": "*"
+        "ext-apcu": "Required by ApcQueryLocator",
+        "ray/di": "Required by QueryLocatorModule and for #[Inject] in QueryLocatorInject"
     },
     "scripts" :{
         "bin": "echo 'bamarni/composer-bin-plugin is not installed: vendor-bin tools skipped.'",
